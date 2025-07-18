@@ -1,3 +1,19 @@
+"""
+Azure Function for Processing and Uploading Excel/CSV Files to Blob Storage
+
+This function provides an HTTP endpoint that:
+1. Accepts Excel (.xlsx) or CSV file uploads
+2. Processes the file by adding Month and Year columns
+3. Saves the processed file to Azure Blob Storage
+4. Uses CORS to allow cross-origin requests from the frontend
+
+Environment Variables Required:
+    AZURE_STORAGE_CONNECTION_STRING: Connection string for the Azure Storage account
+
+Returns:
+    HTTP responses with appropriate status codes and JSON messages
+"""
+
 import logging
 import azure.functions as func
 import pandas as pd
@@ -7,6 +23,15 @@ import os
 import tempfile
 
 def main(req: func.HttpRequest) -> func.HttpResponse:
+    """
+    Main entry point for the Azure Function.
+    
+    Args:
+        req (func.HttpRequest): The HTTP request object containing the uploaded file
+        
+    Returns:
+        func.HttpResponse: JSON response indicating success or failure
+    """
     logging.info('Python HTTP trigger function processed a request.')
     
     # Set CORS headers
